@@ -23,6 +23,8 @@ background:#f5f7fb;
 padding:20px;
 }
 
+/* HEADER */
+
 .header{
 display:flex;
 justify-content:space-between;
@@ -32,7 +34,7 @@ margin-bottom:20px;
 
 .title{
 font-size:28px;
-font-weight:bold;
+font-weight:700;
 color:#0f172a;
 }
 
@@ -48,6 +50,36 @@ font-weight:600;
 background:#2563eb;
 color:white;
 }
+
+/* STATISTIK */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat-card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(15,23,42,.08);
+}
+
+.stat-title{
+font-size:14px;
+color:#64748b;
+}
+
+.stat-number{
+font-size:32px;
+font-weight:bold;
+margin-top:10px;
+color:#0f172a;
+}
+
+/* CARD */
 
 .card{
 background:white;
@@ -74,24 +106,28 @@ outline:none;
 }
 
 textarea{
-resize:none;
 height:100px;
+resize:none;
 }
+
+/* SEARCH */
 
 .search-box{
 position:relative;
-}
-
-.search-box input{
-padding-left:40px;
 }
 
 .search-box i{
 position:absolute;
 left:15px;
 top:14px;
-color:#666;
+color:#64748b;
 }
+
+.search-box input{
+padding-left:40px;
+}
+
+/* TABLE */
 
 .table-container{
 overflow-x:auto;
@@ -105,31 +141,13 @@ border-collapse:collapse;
 th{
 background:#2563eb;
 color:white;
-padding:12px;
+padding:14px;
 text-align:left;
 }
 
 td{
-padding:12px;
+padding:14px;
 border-bottom:1px solid #eee;
-}
-
-.action-btn{
-border:none;
-padding:8px 12px;
-border-radius:8px;
-cursor:pointer;
-margin-right:5px;
-}
-
-.edit{
-background:#f59e0b;
-color:white;
-}
-
-.delete{
-background:#dc2626;
-color:white;
 }
 
 .avatar{
@@ -144,24 +162,91 @@ align-items:center;
 font-weight:bold;
 }
 
-.stats{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-margin-bottom:20px;
+.action-btn{
+padding:8px 12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-right:5px;
+font-size:13px;
 }
 
-.stat-card{
+.delete{
+background:#dc2626;
+color:white;
+}
+
+/* TOAST */
+
+.toast{
+display:none;
+position:fixed;
+top:20px;
+right:20px;
+padding:15px 20px;
+border-radius:12px;
+color:white;
+font-weight:600;
+z-index:99999;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.toast-success{
+background:#16a34a;
+}
+
+.toast-error{
+background:#dc2626;
+}
+
+.toast-warning{
+background:#f59e0b;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(5px);
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.modal-content{
 background:white;
-padding:20px;
+padding:25px;
+width:90%;
+max-width:400px;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(15,23,42,.08);
+text-align:center;
 }
 
-.stat-number{
-font-size:30px;
-font-weight:bold;
-margin-top:10px;
+.modal-buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.modal-buttons button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+}
+
+#cancelModal{
+background:#e5e7eb;
+}
+
+#confirmModalBtn{
+background:#dc2626;
+color:white;
 }
 
 @media(max-width:768px){
@@ -176,46 +261,59 @@ align-items:flex-start;
 
 </style>
 </head>
-
 <body>
+
+<!-- HEADER -->
 
 <div class="header">
 
-<div class="title">
+<h1 class="title">
 🎓 Data Siswa
-</div>
+</h1>
 
+<a href="dashboard.html">
 <button class="btn btn-primary">
 <i class="fa-solid fa-arrow-left"></i>
  Dashboard
 </button>
+</a>
 
 </div>
+
+<!-- STATISTIK -->
 
 <div class="stats">
 
 <div class="stat-card">
-<h4>Total Siswa</h4>
+<div class="stat-title">
+Total Siswa
+</div>
 <div class="stat-number" id="totalSiswa">
 0
 </div>
 </div>
 
 <div class="stat-card">
-<h4>Siswa Laki-laki</h4>
+<div class="stat-title">
+Laki-laki
+</div>
 <div class="stat-number" id="totalLaki">
 0
 </div>
 </div>
 
 <div class="stat-card">
-<h4>Siswa Perempuan</h4>
+<div class="stat-title">
+Perempuan
+</div>
 <div class="stat-number" id="totalPerempuan">
 0
 </div>
 </div>
 
 </div>
+
+<!-- FORM -->
 
 <div class="card">
 
@@ -241,17 +339,19 @@ id="kelas"
 placeholder="Kelas">
 
 <select id="jk">
+
 <option value="">
 Pilih Jenis Kelamin
 </option>
 
-<option>
+<option value="Laki-laki">
 Laki-laki
 </option>
 
-<option>
+<option value="Perempuan">
 Perempuan
 </option>
+
 </select>
 
 </div>
@@ -260,7 +360,7 @@ Perempuan
 
 <textarea
 id="alamat"
-placeholder="Alamat">
+placeholder="Alamat siswa">
 </textarea>
 
 <br><br>
@@ -276,6 +376,8 @@ class="btn btn-primary">
 
 </div>
 
+<!-- SEARCH -->
+
 <div class="card">
 
 <div class="search-box">
@@ -285,11 +387,13 @@ class="btn btn-primary">
 <input
 type="text"
 id="searchInput"
-placeholder="Cari nama siswa...">
+placeholder="Cari siswa...">
 
 </div>
 
 </div>
+
+<!-- TABLE -->
 
 <div class="card">
 
@@ -313,14 +417,10 @@ placeholder="Cari nama siswa...">
 <tbody id="studentTable">
 
 <tr>
-
 <td colspan="6"
 style="text-align:center;">
-
 Belum ada data siswa
-
 </td>
-
 </tr>
 
 </tbody>
@@ -331,6 +431,43 @@ Belum ada data siswa
 
 </div>
 
+<!-- TOAST -->
+
+<div id="toast" class="toast"></div>
+
+<!-- MODAL -->
+
+<div id="confirmModal" class="modal">
+
+<div class="modal-content">
+
+<h2 id="modalTitle">
+Konfirmasi
+</h2>
+
+<br>
+
+<p id="modalMessage">
+Yakin?
+</p>
+
+<div class="modal-buttons">
+
+<button id="cancelModal">
+Batal
+</button>
+
+<button id="confirmModalBtn">
+Ya
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="ui.js"></script>
 <script type="module" src="students.js"></script>
 
 </body>
