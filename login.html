@@ -3,58 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login EduSchool</title>
+
+<title>Login - EduSchool Premium</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
 body{
-font-family:Arial,sans-serif;
-background:#f5f5f5;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+padding:20px;
+
+/* Education background image */
+background:
+linear-gradient(rgba(15,23,42,.75), rgba(15,23,42,.75)),
+url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b") center/cover no-repeat;
 }
 
-.box{
-background:white;
+/* ================= LOGIN BOX ================= */
+.login-box{
+width:100%;
+max-width:380px;
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(10px);
 padding:30px;
-border-radius:10px;
-width:350px;
-box-shadow:0 0 10px rgba(0,0,0,.1);
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.35);
+}
+
+/* LOGO */
+.logo{
+text-align:center;
+font-size:30px;
+margin-bottom:10px;
+}
+
+/* TITLE */
+h2{
+text-align:center;
+color:#0f172a;
+margin-bottom:5px;
+}
+
+p{
+text-align:center;
+font-size:13px;
+color:#555;
+margin-bottom:20px;
+}
+
+/* INPUT */
+.input-group{
+position:relative;
+margin-bottom:15px;
+}
+
+.input-group i{
+position:absolute;
+top:50%;
+left:12px;
+transform:translateY(-50%);
+color:#777;
 }
 
 input{
 width:100%;
-padding:12px;
-margin:10px 0;
+padding:12px 12px 12px 38px;
+border-radius:12px;
+border:1px solid #ddd;
+outline:none;
+transition:.2s;
 }
 
+input:focus{
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,.2);
+}
+
+/* BUTTON */
 button{
 width:100%;
 padding:12px;
-background:#1565c0;
-color:white;
 border:none;
+border-radius:12px;
+background:#2563eb;
+color:white;
+font-weight:600;
 cursor:pointer;
+transition:.2s;
 }
-</style>
 
+button:hover{
+background:#1d4ed8;
+}
+
+/* LINK */
+.link{
+text-align:center;
+margin-top:15px;
+font-size:13px;
+}
+
+.link a{
+color:#2563eb;
+text-decoration:none;
+font-weight:600;
+}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+.login-box{
+padding:25px;
+}
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="box">
-<h2>Login EduSchool</h2>
+<div class="login-box">
 
+<div class="logo">🏫📚</div>
+
+<h2>EduSchool Login</h2>
+<p>Masuk ke sistem manajemen sekolah</p>
+
+<div class="input-group">
+<i class="fa-solid fa-envelope"></i>
 <input type="email" id="email" placeholder="Email">
+</div>
 
+<div class="input-group">
+<i class="fa-solid fa-lock"></i>
 <input type="password" id="password" placeholder="Password">
+</div>
 
-<button id="loginBtn">Login</button>
+<button id="loginBtn">
+<i class="fa-solid fa-right-to-bracket"></i>
+ Login
+</button>
 
-<p>
-Belum punya akun?
-<a href="register.html">Daftar</a>
-</p>
+<div class="link">
+Belum punya akun? <a href="register.html">Daftar</a>
+</div>
 
 </div>
 
