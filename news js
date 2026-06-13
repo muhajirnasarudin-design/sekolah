@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.12/firebase-app.js";
 import {
   getFirestore,
   collection,
@@ -6,11 +6,18 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
+  getDoc,
+  updateDoc,
   query,
   orderBy
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.12/firebase-firestore.js";
 
-/* ================= FIREBASE ================= */
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.12/firebase-auth.js";
+
+/* FIREBASE */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_AUTH_DOMAIN",
@@ -19,29 +26,53 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-/* ================= ELEMENT ================= */
+/* ELEMENT */
 const title = document.getElementById("title");
 const content = document.getElementById("content");
 const date = document.getElementById("date");
-
 const newsList = document.getElementById("newsList");
+const userRole = document.getElementById("userRole");
+
+let isAdmin = false;
 
 /* AUTO DATE */
 date.value = new Date().toISOString().split("T")[0];
 
-/* ================= SAVE NEWS ================= */
+/* USER CHECK */
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+
+  if (snap.exists()) {
+    isAdmin = snap.data().role === "admin";
+    userRole.textContent = snap.data().role || "user";
+  }
+
+  loadNews();
+});
+
+/* SAVE NEWS */
 document.getElementById("saveNews").onclick = async () => {
 
+  if (!isAdmin) return alert("❌ hanya admin");
+
   if (!title.value || !content.value) {
-    alert("Isi judul dan isi berita!");
-    return;
+    return alert("Isi judul & berita!");
   }
 
   await addDoc(collection(db, "news"), {
     title: title.value,
     content: content.value,
-    date: date.value || new Date().toISOString().split("T")[0],
+    date: date.value,
+    views: 0,
     createdAt: new Date()
   });
 
@@ -49,54 +80,61 @@ document.getElementById("saveNews").onclick = async () => {
   content.value = "";
 };
 
-/* ================= REALTIME NEWS ================= */
-const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+/* LOAD NEWS */
+function loadNews() {
 
-onSnapshot(q, (snap) => {
+  const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
 
-  newsList.innerHTML = "";
+  onSnapshot(q, (snap) => {
 
-  if (snap.empty) {
-    newsList.innerHTML = `
-      <p style="text-align:center;color:#666;">
-        Belum ada berita
-      </p>
-    `;
-    return;
-  }
+    newsList.innerHTML = "";
 
-  snap.forEach((d) => {
+    snap.forEach((d) => {
 
-    const data = d.data();
+      const data = d.data();
 
-    newsList.innerHTML += `
-      <div class="news-card">
-        <div class="news-title">
-          ${data.title}
+      newsList.innerHTML += `
+        <div class="news-card">
+
+          <div class="news-title">${data.title}</div>
+
+          <div class="news-date">
+            📅 ${data.date} | 👁 ${data.views || 0} views
+          </div>
+
+          <div class="news-content">${data.content}</div>
+
+          <br>
+
+          <button onclick="openNews('${d.id}', ${data.views || 0})"
+            style="background:#2563eb;color:white;padding:8px 12px;border:none;border-radius:10px;">
+            Baca
+          </button>
+
+          ${isAdmin ? `
+            <button onclick="deleteNews('${d.id}')"
+              style="background:#dc2626;color:white;padding:8px 12px;border:none;border-radius:10px;">
+              Hapus
+            </button>
+          ` : ""}
+
         </div>
+      `;
+    });
 
-        <div class="news-date">
-          📅 ${data.date}
-        </div>
-
-        <div class="news-content">
-          ${data.content}
-        </div>
-
-        <br>
-
-        <button onclick="deleteNews('${d.id}')"
-          style="background:#dc2626;color:white;padding:8px 12px;border:none;border-radius:10px;cursor:pointer;">
-          Hapus
-        </button>
-
-      </div>
-    `;
   });
+}
 
-});
+/* VIEW COUNTER */
+window.openNews = async (id, views) => {
+  const ref = doc(db, "news", id);
+  await updateDoc(ref, {
+    views: views + 1
+  });
+};
 
-/* ================= DELETE NEWS ================= */
+/* DELETE */
 window.deleteNews = async (id) => {
+  if (!isAdmin) return alert("❌ tidak punya akses");
   await deleteDoc(doc(db, "news", id));
 };
