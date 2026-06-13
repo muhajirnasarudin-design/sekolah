@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Berita Sekolah - EduSchool Premium</title>
+<title>News Portal - EduSchool</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -49,7 +49,7 @@ margin-bottom:20px;
 /* FORM */
 .form-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:1fr;
 gap:15px;
 }
 
@@ -58,12 +58,10 @@ width:100%;
 padding:12px;
 border-radius:12px;
 border:1px solid #ddd;
-font-family:'Segoe UI';
 }
 
 textarea{
 min-height:120px;
-resize:none;
 }
 
 /* BUTTON */
@@ -80,7 +78,7 @@ background:#2563eb;
 color:white;
 }
 
-/* NEWS CARD */
+/* NEWS */
 .news-card{
 background:white;
 padding:15px;
@@ -92,26 +90,25 @@ box-shadow:0 5px 15px rgba(0,0,0,0.05);
 .news-title{
 font-size:18px;
 font-weight:bold;
-margin-bottom:5px;
 }
 
 .news-date{
 font-size:12px;
 color:#666;
-margin-bottom:10px;
+margin:5px 0;
 }
 
 .news-content{
 font-size:14px;
-color:#333;
+margin-top:10px;
 }
 
 .badge{
-padding:4px 10px;
-border-radius:50px;
 background:#16a34a;
 color:white;
-font-size:11px;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
 }
 
 </style>
@@ -119,20 +116,18 @@ font-size:11px;
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-<h1 class="title">📰 Berita Sekolah</h1>
+<h1 class="title">📰 News Portal</h1>
 
 <a href="dashboard.html">
 <button class="btn btn-primary">⬅ Dashboard</button>
 </a>
 </div>
 
-<!-- FORM -->
+<!-- ADMIN FORM -->
 <div class="card">
 
-<h3>Tambah Berita</h3>
-<br>
+<h3>Tambah Berita (Admin)</h3><br>
 
 <div class="form-grid">
 
@@ -147,23 +142,20 @@ font-size:11px;
 <br>
 
 <button class="btn btn-primary" id="saveNews">
-+ Publish
+Publish
 </button>
+
+<p id="userRole" class="badge">loading...</p>
 
 </div>
 
 <!-- LIST NEWS -->
 <div class="card">
 
-<h3>📢 Daftar Berita</h3>
-<br>
+<h3>📰 Berita Terbaru</h3><br>
 
 <div id="newsList">
-
-<p style="text-align:center;color:#666;">
-Belum ada berita
-</p>
-
+<p style="text-align:center;color:#666;">Loading...</p>
 </div>
 
 </div>
