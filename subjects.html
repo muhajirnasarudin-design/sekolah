@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mata Pelajaran - EduSchool Premium</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+padding:20px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+color:#0f172a;
+}
+
+.btn{
+padding:12px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+}
+
+.btn-primary{
+background:#2563eb;
+color:white;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(15,23,42,.08);
+margin-bottom:20px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat-card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(15,23,42,.08);
+}
+
+.stat-number{
+font-size:32px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:12px;
+}
+
+.search-box{
+position:relative;
+}
+
+.search-box i{
+position:absolute;
+left:15px;
+top:14px;
+color:#666;
+}
+
+.search-box input{
+padding-left:40px;
+}
+
+.table-container{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#2563eb;
+color:white;
+padding:12px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.action-btn{
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+}
+
+.toast{
+display:none;
+position:fixed;
+top:20px;
+right:20px;
+padding:15px 20px;
+border-radius:12px;
+color:white;
+font-weight:600;
+z-index:99999;
+}
+
+.toast-success{
+background:#16a34a;
+}
+
+.toast-error{
+background:#dc2626;
+}
+
+.toast-warning{
+background:#f59e0b;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.modal-content{
+background:white;
+padding:25px;
+width:90%;
+max-width:400px;
+border-radius:20px;
+text-align:center;
+}
+
+.modal-buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.modal-buttons button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+.header{
+flex-direction:column;
+align-items:flex-start;
+gap:15px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<h1 class="title">
+📚 Mata Pelajaran
+</h1>
+
+<a href="dashboard.html">
+<button class="btn btn-primary">
+<i class="fa-solid fa-arrow-left"></i>
+ Dashboard
+</button>
+</a>
+
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<h4>Total Mata Pelajaran</h4>
+<div class="stat-number" id="totalSubjects">
+0
+</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Tambah Mata Pelajaran</h3>
+
+<br>
+
+<div class="form-grid">
+
+<input
+type="text"
+id="kodeMapel"
+placeholder="Kode Mapel">
+
+<input
+type="text"
+id="namaMapel"
+placeholder="Nama Mata Pelajaran">
+
+<input
+type="text"
+id="guruMapel"
+placeholder="Guru Pengampu">
+
+</div>
+
+<br>
+
+<button
+id="saveBtn"
+class="btn btn-primary">
+
+<i class="fa-solid fa-plus"></i>
+ Tambah Mata Pelajaran
+
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="search-box">
+
+<i class="fa-solid fa-search"></i>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Cari mata pelajaran...">
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Kode</th>
+<th>Mata Pelajaran</th>
+<th>Guru Pengampu</th>
+<th>Aksi</th>
+</tr>
+
+</thead>
+
+<tbody id="subjectTable">
+
+<tr>
+<td colspan="4" style="text-align:center;">
+Belum ada data mata pelajaran
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="confirmModal" class="modal">
+
+<div class="modal-content">
+
+<h2 id="modalTitle">
+Konfirmasi
+</h2>
+
+<br>
+
+<p id="modalMessage">
+Yakin?
+</p>
+
+<div class="modal-buttons">
+
+<button id="cancelModal">
+Batal
+</button>
+
+<button id="confirmModalBtn">
+Ya
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="ui.js"></script>
+<script type="module" src="subjects.js"></script>
+
+</body>
+</html>
