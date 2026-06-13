@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EduSchool Premium</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+header{
+    background:#1565c0;
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+}
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+    background:linear-gradient(to right,#1565c0,#42a5f5);
+    color:white;
+}
+
+.hero h1{
+    font-size:45px;
+}
+
+.hero p{
+    margin-top:15px;
+    font-size:18px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 25px;
+    background:white;
+    color:#1565c0;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.ads{
+    margin:30px auto;
+    width:90%;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    text-align:center;
+}
+
+.ads img{
+    width:100%;
+    border-radius:10px;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.pricing{
+    padding:40px;
+    text-align:center;
+}
+
+.price-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+.price-card{
+    background:white;
+    width:250px;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.price-card h2{
+    color:#1565c0;
+}
+
+.price{
+    font-size:28px;
+    margin:15px 0;
+}
+
+.subscribe{
+    background:#1565c0;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:30px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">EduSchool Premium</div>
+
+    <nav>
+        <a href="#">Beranda</a>
+        <a href="#">Materi</a>
+        <a href="#">Video</a>
+        <a href="#">Berita</a>
+        <a href="#">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Belajar Lebih Mudah</h1>
+    <p>Dapatkan akses materi premium dengan Trial Gratis 2 Hari</p>
+
+    <a href="#" class="btn">Mulai Gratis</a>
+</section>
+
+<div class="ads">
+    <h2>Iklan Sekolah</h2>
+    <br>
+    <img src="https://picsum.photos/1200/300" alt="">
+</div>
+
+<section class="features">
+
+<div class="card">
+    <h3>📚 Materi Lengkap</h3>
+    <p>Materi SD, SMP, SMA dan latihan soal.</p>
+</div>
+
+<div class="card">
+    <h3>🎥 Video Pembelajaran</h3>
+    <p>Belajar dari video interaktif.</p>
+</div>
+
+<div class="card">
+    <h3>📝 Ujian Online</h3>
+    <p>Latihan soal dan ujian kapan saja.</p>
+</div>
+
+<div class="card">
+    <h3>🏆 Sertifikat</h3>
+    <p>Dapatkan sertifikat setelah menyelesaikan kursus.</p>
+</div>
+
+</section>
+
+<section class="pricing">
+
+<h1>Paket Langganan</h1>
+<br>
+
+<div class="price-container">
+
+<div class="price-card">
+    <h2>Bulanan</h2>
+    <div class="price">Rp20.000</div>
+    <button class="subscribe">Berlangganan</button>
+</div>
+
+<div class="price-card">
+    <h2>3 Bulan</h2>
+    <div class="price">Rp50.000</div>
+    <button class="subscribe">Berlangganan</button>
+</div>
+
+<div class="price-card">
+    <h2>6 Bulan</h2>
+    <div class="price">Rp90.000</div>
+    <button class="subscribe">Berlangganan</button>
+</div>
+
+<div class="price-card">
+    <h2>Tahunan</h2>
+    <div class="price">Rp150.000</div>
+    <button class="subscribe">Berlangganan</button>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 EduSchool Premium | Trial Gratis 2 Hari
+</footer>
+
+</body>
+</html>
