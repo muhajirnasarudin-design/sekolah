@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Siswa</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+body{
+font-family:Segoe UI,sans-serif;
+background:#f5f7fb;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.1);
+margin-bottom:20px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:8px 0;
+}
+
+button{
+padding:12px 20px;
+border:none;
+background:#2563eb;
+color:white;
+cursor:pointer;
+border-radius:8px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #ddd;
+text-align:left;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Tambah Data Siswa</h2>
+
+<input id="nis" placeholder="NIS">
+<input id="nama" placeholder="Nama Siswa">
+<input id="kelas" placeholder="Kelas">
+
+<select id="jk">
+<option>Laki-laki</option>
+<option>Perempuan</option>
+</select>
+
+<input id="alamat" placeholder="Alamat">
+
+<button id="saveBtn">
+Tambah Siswa
+</button>
+</div>
+
+<div class="card">
+<h2>Daftar Siswa</h2>
+
+<table>
+<thead>
+<tr>
+<th>NIS</th>
+<th>Nama</th>
+<th>Kelas</th>
+<th>JK</th>
+<th>Aksi</th>
+</tr>
+</thead>
+
+<tbody id="studentTable">
+</tbody>
+
+</table>
+</div>
+
+<script type="module" src="students.js"></script>
+
+</body>
+</html>
