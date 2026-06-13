@@ -1,116 +1,157 @@
 import { auth, db } from "./firebase.js";
 
 import {
-  onAuthStateChanged,
-  signOut
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 import {
-  doc,
-  getDoc
+doc,
+getDoc,
+collection,
+getDocs
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 onAuthStateChanged(auth, async (user) => {
 
-  if (!user) {
-    window.location.href = "login.html";
+if (!user) {
+window.location.href = "login.html";
+return;
+}
+
+try {
+
+// Ambil data user
+const userRef = doc(db, "users", user.uid);
+const userSnap = await getDoc(userRef);
+
+if (!userSnap.exists()) {
+  alert("Data user tidak ditemukan.");
+  return;
+}
+
+const data = userSnap.data();
+
+// Header Profil
+document.getElementById("namaUser").textContent =
+  data.nama || "Pengguna";
+
+document.getElementById("emailUser").textContent =
+  data.email || "-";
+
+// Informasi Akun
+document.getElementById("infoNama").textContent =
+  data.nama || "-";
+
+document.getElementById("infoEmail").textContent =
+  data.email || "-";
+
+document.getElementById("infoPlan").textContent =
+  data.plan || "trial";
+
+document.getElementById("planUserText").textContent =
+  (data.plan || "trial").toUpperCase();
+
+// Avatar otomatis
+document.getElementById("avatarUser").textContent =
+  data.nama
+    ? data.nama.charAt(0).toUpperCase()
+    : "U";
+
+// Cek Trial
+if (data.expiredAt) {
+
+  const now = new Date();
+  const expiredDate =
+    new Date(data.expiredAt);
+
+  if (
+    now > expiredDate &&
+    data.plan === "trial"
+  ) {
+
+    alert(
+      "Masa trial Anda telah berakhir."
+    );
+
+    window.location.href =
+      "subscription.html";
+
     return;
   }
 
-  try {
+}
 
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+// Total Siswa
+const siswaSnapshot =
+  await getDocs(
+    collection(db, "students")
+  );
 
-    if (!userSnap.exists()) {
-      alert("Data user tidak ditemukan.");
-      return;
-    }
+document.getElementById(
+  "totalSiswa"
+).textContent =
+  siswaSnapshot.size;
 
-    const data = userSnap.data();
+// Total Guru
+const guruSnapshot =
+  await getDocs(
+    collection(db, "teachers")
+  );
 
-    document.getElementById("namaUser").textContent =
-      data.nama || "Pengguna";
+document.getElementById(
+  "totalGuru"
+).textContent =
+  guruSnapshot.size;
 
-    document.getElementById("emailUser").textContent =
-      data.email || "-";
+// Total Kelas (sementara)
+document.getElementById(
+  "totalKelas"
+).textContent = "0";
 
-    document.getElementById("infoNama").textContent =
-      data.nama || "-";
+} catch (error) {
 
-    document.getElementById("infoEmail").textContent =
-      data.email || "-";
+console.error(error);
 
-    document.getElementById("infoPlan").textContent =
-      data.plan || "trial";
+alert(
+  error.code +
+  "\n" +
+  error.message
+);
 
-    document.getElementById("planUserText").textContent =
-      (data.plan || "trial").toUpperCase();
-
-    document.getElementById("avatarUser").textContent =
-      data.nama
-        ? data.nama.charAt(0).toUpperCase()
-        : "U";
-
-    const now = new Date();
-
-    if (data.expiredAt) {
-
-      const expiredDate =
-        new Date(data.expiredAt);
-
-      if (
-        now > expiredDate &&
-        data.plan === "trial"
-      ) {
-
-        alert(
-          "Masa trial Anda telah berakhir."
-        );
-
-        window.location.href =
-          "subscribe.html";
-
-        return;
-      }
-    }
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "Gagal memuat data user."
-    );
-
-  }
+}
 
 });
 
+// Logout
 document
 .getElementById("logoutBtn")
 .addEventListener(
 "click",
 async () => {
 
-  const keluar =
-    confirm(
-      "Yakin ingin logout?"
-    );
+const keluar =
+confirm(
+"Yakin ingin logout?"
+);
 
-  if (!keluar) return;
+if (!keluar) return;
 
-  try {
+try {
 
-    await signOut(auth);
+await signOut(auth);
 
-    window.location.href =
-      "login.html";
+window.location.href =
+  "login.html";
 
-  } catch (error) {
+} catch (error) {
 
-    alert(error.message);
+alert(
+  error.code +
+  "\n" +
+  error.message
+);
 
-  }
+}
 
 });
