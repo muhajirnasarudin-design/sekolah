@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings - EduSchool Premium</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+padding:20px;
+}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+color:#0f172a;
+}
+
+/* CARD */
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+/* FORM */
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+input, select{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid #ddd;
+}
+
+.btn{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+}
+
+.btn-primary{
+background:#2563eb;
+color:white;
+}
+
+.btn-danger{
+background:#dc2626;
+color:white;
+}
+
+/* BADGE */
+.badge{
+padding:6px 12px;
+border-radius:50px;
+font-size:12px;
+color:white;
+}
+
+.active{background:#16a34a;}
+.trial{background:#f59e0b;}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+<h1 class="title">⚙ Settings</h1>
+
+<a href="dashboard.html">
+<button class="btn btn-primary">⬅ Dashboard</button>
+</a>
+</div>
+
+<!-- PROFILE -->
+<div class="card">
+
+<h3>👤 Profil Pengguna</h3>
+<br>
+
+<div class="form-grid">
+
+<input type="text" id="name" placeholder="Nama Lengkap">
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="text" id="role" placeholder="Role (Admin/Guru/Siswa)" disabled>
+
+</div>
+
+<br>
+
+<button class="btn btn-primary" id="saveProfile">
+💾 Simpan Perubahan
+</button>
+
+</div>
+
+<!-- PLAN -->
+<div class="card">
+
+<h3>💳 Paket Langganan</h3>
+<br>
+
+<p>Status akun saat ini:</p>
+<br>
+
+<span class="badge trial" id="planStatus">TRIAL</span>
+
+<br><br>
+
+<div class="form-grid">
+
+<button class="btn btn-primary">
+Upgrade Premium
+</button>
+
+<button class="btn btn-danger">
+Batalkan Paket
+</button>
+
+</div>
+
+</div>
+
+<!-- SECURITY -->
+<div class="card">
+
+<h3>🔐 Keamanan</h3>
+<br>
+
+<div class="form-grid">
+
+<input type="password" placeholder="Password Baru">
+
+<input type="password" placeholder="Konfirmasi Password">
+
+</div>
+
+<br>
+
+<button class="btn btn-primary">
+Update Password
+</button>
+
+</div>
+
+<!-- LOGOUT -->
+<div class="card">
+
+<h3>🚪 Logout</h3>
+<br>
+
+<button class="btn btn-danger" id="logoutBtn">
+Logout Akun
+</button>
+
+</div>
+
+<script type="module" src="settings.js"></script>
+
+</body>
+</html>
