@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nilai Siswa - EduSchool Premium</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f5f7fb;
+padding:20px;
+}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+color:#0f172a;
+}
+
+/* CARD */
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+/* FORM */
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid #ddd;
+}
+
+/* BUTTON */
+.btn{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+}
+
+.btn-primary{
+background:#2563eb;
+color:white;
+}
+
+/* BADGE */
+.badge{
+padding:5px 10px;
+border-radius:10px;
+color:white;
+font-size:12px;
+}
+
+.good{background:#16a34a;}
+.mid{background:#f59e0b;}
+.bad{background:#dc2626;}
+
+/* TABLE */
+.table-container{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#2563eb;
+color:white;
+padding:12px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+<h1 class="title">📊 Nilai Siswa</h1>
+
+<a href="dashboard.html">
+<button class="btn btn-primary">⬅ Dashboard</button>
+</a>
+</div>
+
+<!-- FORM INPUT NILAI -->
+<div class="card">
+
+<h3>Tambah Nilai</h3>
+<br>
+
+<div class="form-grid">
+
+<select id="classSelect">
+<option value="">Pilih Kelas</option>
+</select>
+
+<select id="subjectSelect">
+<option value="">Pilih Mapel</option>
+</select>
+
+<select id="studentSelect">
+<option value="">Pilih Siswa</option>
+</select>
+
+<input type="number" id="score" placeholder="Nilai (0-100)">
+
+</div>
+
+<br>
+
+<button class="btn btn-primary" id="saveGrade">
+💾 Simpan Nilai
+</button>
+
+</div>
+
+<!-- STAT -->
+<div class="card">
+
+<h3>Statistik Nilai</h3>
+<br>
+
+<p>Rata-rata: <b id="avgScore">0</b></p>
+
+</div>
+
+<!-- TABLE -->
+<div class="card">
+
+<h3>Daftar Nilai</h3>
+<br>
+
+<div class="table-container">
+
+<table>
+<thead>
+<tr>
+<th>Siswa</th>
+<th>Kelas</th>
+<th>Mapel</th>
+<th>Nilai</th>
+<th>Keterangan</th>
+</tr>
+</thead>
+
+<tbody id="gradeTable">
+
+<tr>
+<td colspan="5" style="text-align:center;">
+Belum ada data nilai
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script type="module" src="grades.js"></script>
+
+</body>
+</html>
