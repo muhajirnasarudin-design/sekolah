@@ -16,6 +16,9 @@ projectId: "YOUR_PROJECT"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+/* ELEMENT */
+const classSelect = document.getElementById("classSelect");
+const subjectSelect = document.getElementById("subjectSelect");
 const studentName = document.getElementById("studentName");
 const status = document.getElementById("status");
 const date = document.getElementById("date");
@@ -26,40 +29,52 @@ const totalHadir = document.getElementById("totalHadir");
 const totalIzin = document.getElementById("totalIzin");
 const totalAlpha = document.getElementById("totalAlpha");
 
-const toast = document.getElementById("toast");
-
 const ctx = document.getElementById("attendanceChart");
 let chart;
 
-/* DATE AUTO */
+/* AUTO DATE */
 date.value = new Date().toISOString().split("T")[0];
 
-/* LOAD STUDENTS */
-async function loadStudents(){
-const snap = await getDocs(collection(db,"students"));
-studentName.innerHTML = `<option value="">Pilih Siswa</option>`;
+/* LOAD CLASS */
+async function loadClasses(){
+const snap = await getDocs(collection(db,"classes"));
+classSelect.innerHTML = `<option value="">Pilih Kelas</option>`;
 snap.forEach(d=>{
-const opt = document.createElement("option");
-opt.value = d.data().name;
-opt.textContent = d.data().name;
-studentName.appendChild(opt);
+classSelect.innerHTML += `<option value="${d.data().name}">${d.data().name}</option>`;
 });
 }
+
+/* LOAD SUBJECT */
+async function loadSubjects(){
+const snap = await getDocs(collection(db,"subjects"));
+subjectSelect.innerHTML = `<option value="">Pilih Mapel</option>`;
+snap.forEach(d=>{
+subjectSelect.innerHTML += `<option value="${d.data().nama}">${d.data().nama}</option>`;
+});
+}
+
+/* FILTER STUDENT BY CLASS */
+classSelect.addEventListener("change", async ()=>{
+const snap = await getDocs(collection(db,"students"));
+studentName.innerHTML = `<option value="">Pilih Siswa</option>`;
+
+snap.forEach(d=>{
+const data = d.data();
+if(data.class === classSelect.value){
+studentName.innerHTML += `<option value="${data.name}">${data.name}</option>`;
+}
+});
+});
 
 /* SAVE */
 document.getElementById("saveAttendance").onclick = async ()=>{
-if(!studentName.value || !status.value || !date.value){
-showToast("Lengkapi data","error");
-return;
-}
-
 await addDoc(collection(db,"attendance"),{
 student:studentName.value,
+class:classSelect.value,
+subject:subjectSelect.value,
 status:status.value,
 date:date.value
 });
-
-showToast("Berhasil","success");
 };
 
 /* REALTIME */
@@ -69,16 +84,18 @@ snap.forEach(d=>data.push(d.data()));
 
 render(data);
 stats(data);
-chartRender(data);
+chart(data);
 });
 
-/* RENDER TABLE */
+/* TABLE */
 function render(data){
 table.innerHTML="";
 data.forEach(d=>{
 table.innerHTML += `
 <tr>
 <td>${d.student}</td>
+<td>${d.class}</td>
+<td>${d.subject}</td>
 <td><span class="badge ${d.status}">${d.status}</span></td>
 <td>${d.date}</td>
 </tr>
@@ -100,7 +117,7 @@ totalAlpha.innerText=a;
 }
 
 /* CHART */
-function chartRender(data){
+function chart(data){
 let h=0,i=0,a=0;
 data.forEach(d=>{
 if(d.status=="hadir")h++;
@@ -108,9 +125,9 @@ if(d.status=="izin")i++;
 if(d.status=="alpha")a++;
 });
 
-if(chart)chart.destroy();
+if(chartInstance)chartInstance.destroy();
 
-chart=new Chart(ctx,{
+chartInstance = new Chart(ctx,{
 type:"bar",
 data:{
 labels:["Hadir","Izin","Alpha"],
@@ -122,19 +139,18 @@ backgroundColor:["#16a34a","#f59e0b","#dc2626"]
 });
 }
 
-/* TOAST */
-function showToast(msg,type){
-toast.innerText=msg;
-toast.className=`toast toast-${type}`;
-toast.style.display="block";
-setTimeout(()=>toast.style.display="none",2000);
-}
+let chartInstance;
+
+/* INIT */
+loadClasses();
+loadSubjects();
 
 /* PDF */
 window.exportPDF=function(){
 const {jsPDF}=window.jspdf;
 const doc=new jsPDF();
-doc.text("Absensi Siswa",10,10);
+
+doc.text("Laporan Absensi",10,10);
 
 let y=20;
 document.querySelectorAll("tbody tr").forEach(r=>{
@@ -144,5 +160,3 @@ y+=10;
 
 doc.save("absensi.pdf");
 };
-
-loadStudents();
