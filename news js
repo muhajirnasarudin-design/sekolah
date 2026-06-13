@@ -1,0 +1,102 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  deleteDoc,
+  doc,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ================= ELEMENT ================= */
+const title = document.getElementById("title");
+const content = document.getElementById("content");
+const date = document.getElementById("date");
+
+const newsList = document.getElementById("newsList");
+
+/* AUTO DATE */
+date.value = new Date().toISOString().split("T")[0];
+
+/* ================= SAVE NEWS ================= */
+document.getElementById("saveNews").onclick = async () => {
+
+  if (!title.value || !content.value) {
+    alert("Isi judul dan isi berita!");
+    return;
+  }
+
+  await addDoc(collection(db, "news"), {
+    title: title.value,
+    content: content.value,
+    date: date.value || new Date().toISOString().split("T")[0],
+    createdAt: new Date()
+  });
+
+  title.value = "";
+  content.value = "";
+};
+
+/* ================= REALTIME NEWS ================= */
+const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+
+onSnapshot(q, (snap) => {
+
+  newsList.innerHTML = "";
+
+  if (snap.empty) {
+    newsList.innerHTML = `
+      <p style="text-align:center;color:#666;">
+        Belum ada berita
+      </p>
+    `;
+    return;
+  }
+
+  snap.forEach((d) => {
+
+    const data = d.data();
+
+    newsList.innerHTML += `
+      <div class="news-card">
+        <div class="news-title">
+          ${data.title}
+        </div>
+
+        <div class="news-date">
+          📅 ${data.date}
+        </div>
+
+        <div class="news-content">
+          ${data.content}
+        </div>
+
+        <br>
+
+        <button onclick="deleteNews('${d.id}')"
+          style="background:#dc2626;color:white;padding:8px 12px;border:none;border-radius:10px;cursor:pointer;">
+          Hapus
+        </button>
+
+      </div>
+    `;
+  });
+
+});
+
+/* ================= DELETE NEWS ================= */
+window.deleteNews = async (id) => {
+  await deleteDoc(doc(db, "news", id));
+};
