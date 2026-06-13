@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Absensi - EduSchool Premium</title>
+<title>Absensi - EduSchool</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -24,11 +23,7 @@ align-items:center;
 margin-bottom:20px;
 }
 
-.title{
-font-size:28px;
-font-weight:bold;
-color:#0f172a;
-}
+.title{font-size:28px;font-weight:bold;color:#0f172a;}
 
 .btn{
 padding:12px 18px;
@@ -44,38 +39,28 @@ font-weight:600;
 background:white;
 padding:20px;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(15,23,42,.08);
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
 margin-bottom:20px;
 }
 
 .form-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
 }
 
 input,select{
 width:100%;
 padding:12px;
-border:1px solid #ddd;
 border-radius:12px;
+border:1px solid #ddd;
 }
-
-.stat-box{
-background:#fff;
-padding:15px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.05);
-}
-
-.stat-box h2{font-size:28px;margin-top:10px;}
 
 .badge{
 padding:5px 10px;
 border-radius:10px;
-font-size:12px;
 color:white;
+font-size:12px;
 }
 
 .hadir{background:#16a34a;}
@@ -84,10 +69,7 @@ color:white;
 
 .table-container{overflow-x:auto;}
 
-table{
-width:100%;
-border-collapse:collapse;
-}
+table{width:100%;border-collapse:collapse;}
 
 th{
 background:#2563eb;
@@ -101,31 +83,14 @@ padding:12px;
 border-bottom:1px solid #eee;
 }
 
-canvas{
-width:100% !important;
-max-height:300px;
-}
-
-.toast{
-display:none;
-position:fixed;
-top:20px;
-right:20px;
-padding:15px;
-border-radius:10px;
-color:white;
-z-index:9999;
-}
-
-.toast-success{background:#16a34a;}
-.toast-error{background:#dc2626;}
-.toast-warning{background:#f59e0b;}
+canvas{width:100%!important;max-height:300px;}
 
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
 <h1 class="title">📋 Absensi Siswa</h1>
 
@@ -136,9 +101,18 @@ z-index:9999;
 
 <!-- FORM -->
 <div class="card">
+
 <h3>Tambah Absensi</h3><br>
 
 <div class="form-grid">
+
+<select id="classSelect">
+<option value="">Pilih Kelas</option>
+</select>
+
+<select id="subjectSelect">
+<option value="">Pilih Mapel</option>
+</select>
 
 <select id="studentName">
 <option value="">Pilih Siswa</option>
@@ -157,15 +131,9 @@ z-index:9999;
 
 <br>
 
-<button class="btn btn-primary" id="saveAttendance">+ Simpan</button>
-<button class="btn btn-primary" onclick="exportPDF()">📄 PDF</button>
+<button class="btn btn-primary" id="saveAttendance">Simpan</button>
+<button class="btn btn-primary" onclick="exportPDF()">PDF</button>
 
-</div>
-
-<!-- FILTER -->
-<div class="card">
-<h3>Filter Bulan</h3>
-<input type="month" id="monthFilter">
 </div>
 
 <!-- STATS -->
@@ -173,22 +141,20 @@ z-index:9999;
 <h3>Statistik</h3><br>
 
 <div class="form-grid">
-
-<div class="stat-box">
+<div>
 <h4>Hadir</h4>
 <h2 id="totalHadir">0</h2>
 </div>
 
-<div class="stat-box">
+<div>
 <h4>Izin</h4>
 <h2 id="totalIzin">0</h2>
 </div>
 
-<div class="stat-box">
+<div>
 <h4>Alpha</h4>
 <h2 id="totalAlpha">0</h2>
 </div>
-
 </div>
 </div>
 
@@ -206,6 +172,8 @@ z-index:9999;
 <thead>
 <tr>
 <th>Siswa</th>
+<th>Kelas</th>
+<th>Mapel</th>
 <th>Status</th>
 <th>Tanggal</th>
 </tr>
@@ -217,8 +185,6 @@ z-index:9999;
 
 </div>
 </div>
-
-<div id="toast" class="toast"></div>
 
 <script type="module" src="attendance.js"></script>
 
