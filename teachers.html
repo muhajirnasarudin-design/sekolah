@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Data Guru</title><link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>
+body{
+font-family:'Segoe UI',sans-serif;
+background:#f5f7fb;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+margin-bottom:20px;
+}
+
+h2{
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+button{
+padding:12px 20px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+</style></head><body><div class="card"><h2>Tambah Data Guru</h2><input type="text" id="nip" placeholder="NIP"><input type="text" id="nama" placeholder="Nama Guru"><input type="text" id="mapel" placeholder="Mata Pelajaran"><input type="text" id="alamat" placeholder="Alamat"><button id="saveBtn">
+<i class="fa-solid fa-plus"></i>
+Tambah Guru
+</button></div><div class="card"><h2>Daftar Guru</h2><table><thead>
+<tr>
+<th>NIP</th>
+<th>Nama</th>
+<th>Mapel</th>
+<th>Aksi</th>
+</tr>
+</thead><tbody id="teacherTable">
+</tbody></table></div><script type="module" src="teachers.js"></script></body>
+</html>
