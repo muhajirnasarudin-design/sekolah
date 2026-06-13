@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EduSchool Dashboard</title>
 
@@ -18,7 +18,7 @@ font-family:'Segoe UI',sans-serif;
 }
 
 body{
-background:#f4f7fc;
+background:#f5f7fb;
 display:flex;
 }
 
@@ -26,15 +26,16 @@ display:flex;
 width:270px;
 height:100vh;
 background:#0f172a;
-position:fixed;
 color:white;
+position:fixed;
 padding:25px;
+overflow-y:auto;
 }
 
 .logo{
 font-size:24px;
 font-weight:700;
-margin-bottom:35px;
+margin-bottom:30px;
 }
 
 .menu a{
@@ -42,10 +43,10 @@ display:flex;
 align-items:center;
 gap:12px;
 padding:14px;
-margin-bottom:8px;
-border-radius:12px;
 color:white;
 text-decoration:none;
+border-radius:12px;
+margin-bottom:8px;
 transition:.3s;
 }
 
@@ -61,12 +62,12 @@ padding:25px;
 
 .topbar{
 background:white;
-padding:15px 25px;
+padding:15px 20px;
 border-radius:16px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-box-shadow:0 3px 15px rgba(0,0,0,.05);
+box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
 .search{
@@ -90,31 +91,32 @@ gap:10px;
 }
 
 .avatar{
-width:40px;
-height:40px;
+width:45px;
+height:45px;
 border-radius:50%;
 background:#2563eb;
-display:flex;
-align-items:center;
-justify-content:center;
 color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
 }
 
 .cards{
-margin-top:25px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:20px;
+margin-top:25px;
 }
 
 .card{
 background:white;
 padding:20px;
 border-radius:18px;
-box-shadow:0 3px 15px rgba(0,0,0,.05);
+box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
-.card-top{
+.card-header{
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -125,8 +127,8 @@ width:55px;
 height:55px;
 border-radius:15px;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 font-size:22px;
 }
 
@@ -137,7 +139,7 @@ font-size:22px;
 
 .number{
 font-size:32px;
-font-weight:700;
+font-weight:bold;
 margin-top:10px;
 }
 
@@ -146,7 +148,19 @@ margin-top:25px;
 background:white;
 padding:25px;
 border-radius:18px;
-box-shadow:0 3px 15px rgba(0,0,0,.05);
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.section h3{
+margin-bottom:15px;
+}
+
+.badge{
+padding:5px 12px;
+background:#22c55e;
+color:white;
+border-radius:20px;
+font-size:12px;
 }
 </style>
 </head>
@@ -162,16 +176,19 @@ EduSchool
 
 <div class="menu">
 <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-<a href="#"><i class="fa-solid fa-user-graduate"></i> Siswa</a>
-<a href="#"><i class="fa-solid fa-chalkboard-user"></i> Guru</a>
+<a href="#"><i class="fa-solid fa-user-graduate"></i> Data Siswa</a>
+<a href="#"><i class="fa-solid fa-chalkboard-user"></i> Data Guru</a>
 <a href="#"><i class="fa-solid fa-book"></i> Mata Pelajaran</a>
 <a href="#"><i class="fa-solid fa-calendar-check"></i> Absensi</a>
 <a href="#"><i class="fa-solid fa-square-poll-vertical"></i> Nilai</a>
 <a href="#"><i class="fa-solid fa-newspaper"></i> Berita</a>
+<a href="#"><i class="fa-solid fa-bullhorn"></i> Pengumuman</a>
 <a href="#"><i class="fa-solid fa-image"></i> Galeri</a>
 <a href="#"><i class="fa-solid fa-credit-card"></i> Langganan</a>
 <a href="#"><i class="fa-solid fa-gear"></i> Pengaturan</a>
-<a href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+<a href="#" id="logoutBtn">
+<i class="fa-solid fa-right-from-bracket"></i> Logout
+</a>
 </div>
 
 </div>
@@ -185,11 +202,16 @@ EduSchool
 </div>
 
 <div class="profile">
-<div class="avatar">A</div>
-<div>
-<b>Administrator</b><br>
-<small>Premium Active</small>
+
+<div class="avatar" id="avatarUser">
+U
 </div>
+
+<div>
+<b id="namaUser">Memuat...</b><br>
+<small id="emailUser">Loading...</small>
+</div>
+
 </div>
 
 </div>
@@ -197,10 +219,10 @@ EduSchool
 <div class="cards">
 
 <div class="card">
-<div class="card-top">
+<div class="card-header">
 <div>
 <h4>Total Siswa</h4>
-<div class="number">1.248</div>
+<div class="number" id="totalSiswa">0</div>
 </div>
 <div class="icon blue">
 <i class="fa-solid fa-user-graduate"></i>
@@ -209,10 +231,10 @@ EduSchool
 </div>
 
 <div class="card">
-<div class="card-top">
+<div class="card-header">
 <div>
 <h4>Total Guru</h4>
-<div class="number">82</div>
+<div class="number" id="totalGuru">0</div>
 </div>
 <div class="icon green">
 <i class="fa-solid fa-chalkboard-user"></i>
@@ -221,25 +243,25 @@ EduSchool
 </div>
 
 <div class="card">
-<div class="card-top">
+<div class="card-header">
 <div>
-<h4>Kelas Aktif</h4>
-<div class="number">36</div>
+<h4>Mata Pelajaran</h4>
+<div class="number" id="totalMapel">0</div>
 </div>
 <div class="icon orange">
-<i class="fa-solid fa-school"></i>
+<i class="fa-solid fa-book"></i>
 </div>
 </div>
 </div>
 
 <div class="card">
-<div class="card-top">
+<div class="card-header">
 <div>
-<h4>Pendapatan</h4>
-<div class="number">Rp12JT</div>
+<h4>Status Akun</h4>
+<div class="number" id="planUserText">TRIAL</div>
 </div>
 <div class="icon purple">
-<i class="fa-solid fa-wallet"></i>
+<i class="fa-solid fa-crown"></i>
 </div>
 </div>
 </div>
@@ -248,11 +270,28 @@ EduSchool
 
 <div class="section">
 <h3>📢 Pengumuman Terbaru</h3>
-<br>
-<p>Selamat datang di Dashboard EduSchool Premium.</p>
+
+<p id="announcementText">
+Belum ada pengumuman terbaru.
+</p>
+</div>
+
+<div class="section">
+<h3>👤 Informasi Akun</h3>
+
+<p><b>Nama:</b> <span id="infoNama">-</span></p>
+<p><b>Email:</b> <span id="infoEmail">-</span></p>
+<p><b>Paket:</b> <span id="infoPlan">Trial</span></p>
+<p><b>Status:</b>
+<span class="badge" id="infoStatus">
+Aktif
+</span>
+</p>
 </div>
 
 </div>
+
+<script type="module" src="dashboard.js"></script>
 
 </body>
 </html>
