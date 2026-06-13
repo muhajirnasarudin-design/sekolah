@@ -23,60 +23,89 @@ onAuthStateChanged(auth, async (user) => {
 
   try {
 
-    // =====================
+    // ==========================
     // DATA USER
-    // =====================
+    // ==========================
 
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+    const userRef =
+      doc(db, "users", user.uid);
+
+    const userSnap =
+      await getDoc(userRef);
 
     if (!userSnap.exists()) {
-      alert("Data user tidak ditemukan.");
+      alert("Data user tidak ditemukan");
       return;
     }
 
     const data = userSnap.data();
 
-    // Header
-    document.getElementById("namaUser").textContent =
+    // ==========================
+    // PROFIL USER
+    // ==========================
+
+    document.getElementById(
+      "namaUser"
+    ).textContent =
       data.nama || "Pengguna";
 
-    document.getElementById("emailUser").textContent =
+    document.getElementById(
+      "emailUser"
+    ).textContent =
       data.email || "-";
 
-    // Avatar
-    document.getElementById("avatarUser").textContent =
-      data.nama
-        ? data.nama.charAt(0).toUpperCase()
-        : "U";
-
-    // Informasi akun
-    document.getElementById("infoNama").textContent =
+    document.getElementById(
+      "infoNama"
+    ).textContent =
       data.nama || "-";
 
-    document.getElementById("infoEmail").textContent =
+    document.getElementById(
+      "infoEmail"
+    ).textContent =
       data.email || "-";
 
-    document.getElementById("infoPlan").textContent =
+    document.getElementById(
+      "infoPlan"
+    ).textContent =
       data.plan || "trial";
 
-    document.getElementById("planUserText").textContent =
-      (data.plan || "trial").toUpperCase();
+    document.getElementById(
+      "planUserText"
+    ).textContent =
+      (data.plan || "trial")
+      .toUpperCase();
 
-    // =====================
+    // Avatar otomatis
+
+    document.getElementById(
+      "avatarUser"
+    ).textContent =
+      data.nama
+      ? data.nama.charAt(0)
+          .toUpperCase()
+      : "U";
+
+    // ==========================
     // STATUS AKUN
-    // =====================
+    // ==========================
 
     const statusElement =
-      document.getElementById("infoStatus");
+      document.getElementById(
+        "infoStatus"
+      );
 
-    statusElement.textContent = "Aktif";
+    statusElement.textContent =
+      "Aktif";
 
     if (data.expiredAt) {
 
-      const now = new Date();
+      const now =
+        new Date();
+
       const expiredDate =
-        new Date(data.expiredAt);
+        new Date(
+          data.expiredAt
+        );
 
       if (
         now > expiredDate &&
@@ -87,7 +116,7 @@ onAuthStateChanged(auth, async (user) => {
           "Trial Berakhir";
 
         alert(
-          "Masa trial Anda telah berakhir."
+          "Masa trial telah berakhir"
         );
 
         window.location.href =
@@ -98,64 +127,102 @@ onAuthStateChanged(auth, async (user) => {
 
     }
 
-    // =====================
+    // ==========================
     // TOTAL SISWA
-    // =====================
+    // ==========================
 
-    const siswaQuery = query(
-      collection(db, "students"),
-      where("uid", "==", user.uid)
-    );
+    const siswaQuery =
+      query(
+        collection(
+          db,
+          "students"
+        ),
+        where(
+          "uid",
+          "==",
+          user.uid
+        )
+      );
 
     const siswaSnapshot =
-      await getDocs(siswaQuery);
+      await getDocs(
+        siswaQuery
+      );
 
     document.getElementById(
       "totalSiswa"
     ).textContent =
       siswaSnapshot.size;
 
-    // =====================
+    // ==========================
     // TOTAL GURU
-    // =====================
+    // ==========================
 
-    const guruQuery = query(
-      collection(db, "teachers"),
-      where("uid", "==", user.uid)
-    );
+    const guruQuery =
+      query(
+        collection(
+          db,
+          "teachers"
+        ),
+        where(
+          "uid",
+          "==",
+          user.uid
+        )
+      );
 
     const guruSnapshot =
-      await getDocs(guruQuery);
+      await getDocs(
+        guruQuery
+      );
 
     document.getElementById(
       "totalGuru"
     ).textContent =
       guruSnapshot.size;
 
-    // =====================
+    // ==========================
     // TOTAL KELAS
-    // =====================
+    // ==========================
 
-    const kelasQuery = query(
-      collection(db, "classes"),
-      where("uid", "==", user.uid)
-    );
+    try {
 
-    const kelasSnapshot =
-      await getDocs(kelasQuery);
+      const kelasQuery =
+        query(
+          collection(
+            db,
+            "classes"
+          ),
+          where(
+            "uid",
+            "==",
+            user.uid
+          )
+        );
 
-    document.getElementById(
-      "totalKelas"
-    ).textContent =
-      kelasSnapshot.size;
+      const kelasSnapshot =
+        await getDocs(
+          kelasQuery
+        );
+
+      document.getElementById(
+        "totalKelas"
+      ).textContent =
+        kelasSnapshot.size;
+
+    } catch {
+
+      document.getElementById(
+        "totalKelas"
+      ).textContent = "0";
+
+    }
 
   } catch (error) {
 
     console.error(error);
 
     alert(
-      error.code +
-      "\n" +
       error.message
     );
 
@@ -163,38 +230,79 @@ onAuthStateChanged(auth, async (user) => {
 
 });
 
-// =====================
-// LOGOUT
-// =====================
+// ==========================
+// MODAL LOGOUT
+// ==========================
 
-document
-.getElementById("logoutBtn")
-.addEventListener(
+const modal =
+document.getElementById(
+  "logoutModal"
+);
+
+const logoutBtn =
+document.getElementById(
+  "logoutBtn"
+);
+
+const cancelBtn =
+document.querySelector(
+  ".cancelBtn"
+);
+
+const logoutConfirm =
+document.querySelector(
+  ".logoutBtnConfirm"
+);
+
+if(logoutBtn){
+
+logoutBtn.addEventListener(
 "click",
-async () => {
+(e)=>{
 
-  const keluar =
-    confirm(
-      "Yakin ingin logout?"
-    );
+e.preventDefault();
 
-  if (!keluar) return;
-
-  try {
-
-    await signOut(auth);
-
-    window.location.href =
-      "login.html";
-
-  } catch (error) {
-
-    alert(
-      error.code +
-      "\n" +
-      error.message
-    );
-
-  }
+modal.style.display =
+"flex";
 
 });
+
+}
+
+if(cancelBtn){
+
+cancelBtn.addEventListener(
+"click",
+()=>{
+
+modal.style.display =
+"none";
+
+});
+
+}
+
+if(logoutConfirm){
+
+logoutConfirm.addEventListener(
+"click",
+async()=>{
+
+try{
+
+await signOut(auth);
+
+window.location.href =
+"login.html";
+
+}catch(error){
+
+alert(
+error.message
+);
+
+}
+
+});
+
+}
