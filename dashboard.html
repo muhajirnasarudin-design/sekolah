@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EduSchool Dashboard</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<style>
+<title>EduSchool Premium Dashboard</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>
 *{
 margin:0;
 padding:0;
@@ -36,6 +29,10 @@ overflow-y:auto;
 font-size:24px;
 font-weight:700;
 margin-bottom:30px;
+}
+
+.logo i{
+color:#60a5fa;
 }
 
 .menu a{
@@ -74,7 +71,7 @@ box-shadow:0 4px 15px rgba(0,0,0,.05);
 background:#f1f5f9;
 padding:10px 15px;
 border-radius:10px;
-width:300px;
+width:320px;
 }
 
 .search input{
@@ -87,7 +84,7 @@ width:100%;
 .profile{
 display:flex;
 align-items:center;
-gap:10px;
+gap:12px;
 }
 
 .avatar{
@@ -97,14 +94,15 @@ border-radius:50%;
 background:#2563eb;
 color:white;
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 font-weight:bold;
+font-size:18px;
 }
 
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 margin-top:25px;
 }
@@ -151,74 +149,38 @@ border-radius:18px;
 box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
-.section h3{
-margin-bottom:15px;
-}
-
 .badge{
-padding:5px 12px;
 background:#22c55e;
 color:white;
+padding:5px 12px;
 border-radius:20px;
 font-size:12px;
 }
-</style>
-</head>
-
-<body>
-
-<div class="sidebar">
-
-<div class="logo">
+</style></head><body><div class="sidebar"><div class="logo">
 <i class="fa-solid fa-school"></i>
-EduSchool
-</div>
-
-<div class="menu">
-<a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+EduSchool Premium
+</div><div class="menu">
+<a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
 <a href="students.html"><i class="fa-solid fa-user-graduate"></i> Data Siswa</a>
-<a href="#"><i class="fa-solid fa-chalkboard-user"></i> Data Guru</a>
-<a href="#"><i class="fa-solid fa-book"></i> Mata Pelajaran</a>
-<a href="#"><i class="fa-solid fa-calendar-check"></i> Absensi</a>
-<a href="#"><i class="fa-solid fa-square-poll-vertical"></i> Nilai</a>
-<a href="#"><i class="fa-solid fa-newspaper"></i> Berita</a>
-<a href="#"><i class="fa-solid fa-bullhorn"></i> Pengumuman</a>
-<a href="#"><i class="fa-solid fa-image"></i> Galeri</a>
-<a href="#"><i class="fa-solid fa-credit-card"></i> Langganan</a>
+<a href="teachers.html"><i class="fa-solid fa-chalkboard-user"></i> Data Guru</a>
+<a href="subjects.html"><i class="fa-solid fa-book"></i> Mata Pelajaran</a>
+<a href="attendance.html"><i class="fa-solid fa-calendar-check"></i> Absensi</a>
+<a href="grades.html"><i class="fa-solid fa-square-poll-vertical"></i> Nilai</a>
+<a href="news.html"><i class="fa-solid fa-newspaper"></i> Berita</a>
+<a href="gallery.html"><i class="fa-solid fa-image"></i> Galeri</a>
+<a href="subscription.html"><i class="fa-solid fa-credit-card"></i> Langganan</a>
 <a href="#"><i class="fa-solid fa-gear"></i> Pengaturan</a>
 <a href="#" id="logoutBtn">
 <i class="fa-solid fa-right-from-bracket"></i> Logout
 </a>
-</div>
-
-</div>
-
-<div class="main">
-
-<div class="topbar">
-
-<div class="search">
-<input type="text" placeholder="Cari siswa, guru, berita...">
-</div>
-
-<div class="profile">
-
-<div class="avatar" id="avatarUser">
-U
-</div>
-
-<div>
+</div></div><div class="main"><div class="topbar"><div class="search">
+<input type="text" placeholder="Cari data sekolah...">
+</div><div class="profile">
+<div class="avatar" id="avatarUser">U</div><div>
 <b id="namaUser">Memuat...</b><br>
 <small id="emailUser">Loading...</small>
 </div>
-
-</div>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
+</div></div><div class="cards"><div class="card">
 <div class="card-header">
 <div>
 <h4>Total Siswa</h4>
@@ -228,9 +190,7 @@ U
 <i class="fa-solid fa-user-graduate"></i>
 </div>
 </div>
-</div>
-
-<div class="card">
+</div><div class="card">
 <div class="card-header">
 <div>
 <h4>Total Guru</h4>
@@ -240,21 +200,17 @@ U
 <i class="fa-solid fa-chalkboard-user"></i>
 </div>
 </div>
-</div>
-
-<div class="card">
+</div><div class="card">
 <div class="card-header">
 <div>
-<h4>Mata Pelajaran</h4>
-<div class="number" id="totalMapel">0</div>
+<h4>Total Kelas</h4>
+<div class="number" id="totalKelas">0</div>
 </div>
 <div class="icon orange">
-<i class="fa-solid fa-book"></i>
+<i class="fa-solid fa-school"></i>
 </div>
 </div>
-</div>
-
-<div class="card">
+</div><div class="card">
 <div class="card-header">
 <div>
 <h4>Status Akun</h4>
@@ -264,34 +220,17 @@ U
 <i class="fa-solid fa-crown"></i>
 </div>
 </div>
-</div>
-
-</div>
-
-<div class="section">
-<h3>📢 Pengumuman Terbaru</h3>
-
+</div></div><div class="section">
+<h3>📢 Pengumuman Sekolah</h3>
 <p id="announcementText">
 Belum ada pengumuman terbaru.
 </p>
-</div>
-
-<div class="section">
-<h3>👤 Informasi Akun</h3>
-
-<p><b>Nama:</b> <span id="infoNama">-</span></p>
+</div><div class="section">
+<h3>👤 Informasi Akun</h3><p><b>Nama:</b> <span id="infoNama">-</span></p>
 <p><b>Email:</b> <span id="infoEmail">-</span></p>
 <p><b>Paket:</b> <span id="infoPlan">Trial</span></p>
 <p><b>Status:</b>
-<span class="badge" id="infoStatus">
-Aktif
-</span>
+<span class="badge" id="infoStatus">Aktif</span>
 </p>
-</div>
-
-</div>
-
-<script type="module" src="dashboard.js"></script>
-
-</body>
+</div></div><script type="module" src="dashboard.js"></script></body>
 </html>
